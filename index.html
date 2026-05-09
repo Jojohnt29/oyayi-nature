@@ -36,6 +36,54 @@
 
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{background:var(--bg-deep);color:var(--cream);font-family:"Inter",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background .8s ease, color .8s ease}
+
+  /* ============== INTRO LOADER ============== */
+  body.loading{overflow:hidden}
+  .loader-overlay{
+    position:fixed;inset:0;z-index:9999;
+    background:radial-gradient(ellipse at 50% 60%, color-mix(in oklab, var(--accent) 12%, var(--bg-deep)), var(--bg-deep) 70%);
+    display:grid;place-items:center;
+    transition:opacity .7s ease, visibility .7s ease;
+  }
+  .loader-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+  .loader-inner{display:flex;flex-direction:column;align-items:center;gap:26px}
+  .loader-mark{
+    width:64px;height:64px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--accent), var(--accent-2) 60%, color-mix(in oklab, var(--accent-2) 40%, #000));
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.18), 0 0 60px color-mix(in oklab, var(--accent) 50%, transparent);
+    animation:loader-pulse 1.6s ease-in-out infinite;
+    position:relative;
+  }
+  .loader-mark::after{
+    content:"";position:absolute;inset:-14px;border-radius:50%;
+    border:1px dashed color-mix(in oklab, var(--cream) 22%, transparent);
+    animation:loader-spin 8s linear infinite;
+  }
+  @keyframes loader-pulse{0%,100%{transform:scale(.92);opacity:.85}50%{transform:scale(1);opacity:1}}
+  @keyframes loader-spin{to{transform:rotate(360deg)}}
+  .loader-brand{
+    font-family:"Fraunces",serif;font-weight:300;font-size:34px;letter-spacing:.04em;color:var(--cream);
+    text-align:center;line-height:1;
+  }
+  .loader-brand small{
+    display:block;margin-top:10px;
+    font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.4em;color:var(--cream-2);opacity:.65;
+  }
+  .loader-bar{
+    width:140px;height:2px;background:color-mix(in oklab, var(--cream) 12%, transparent);
+    border-radius:999px;overflow:hidden;position:relative;
+  }
+  .loader-bar i{
+    position:absolute;top:0;left:0;height:100%;width:35%;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent);
+    border-radius:999px;animation:loader-slide 1.4s ease-in-out infinite;
+  }
+  @keyframes loader-slide{0%{left:-35%}100%{left:100%}}
+  @media (max-width:480px){
+    .loader-mark{width:54px;height:54px}
+    .loader-brand{font-size:28px}
+    .loader-bar{width:110px}
+  }
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
   button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -328,6 +376,12 @@
   .ben-card h3{font-family:"Fraunces",serif;font-weight:400;font-size:22px;margin-top:20px;line-height:1.2}
   .ben-card p{font-size:13px;line-height:1.6;color:var(--cream-2);opacity:.85;margin-top:10px}
 
+  /* ============== RATING (testimonials head) ============== */
+  .rating{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:0 0 auto}
+  .rating-num{font-family:"Fraunces",serif;font-weight:300;font-size:48px;color:var(--cream);line-height:1;letter-spacing:-.01em}
+  .rating-num span{color:var(--accent);font-size:24px;margin-left:6px;vertical-align:middle}
+  .rating-label{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream-2);opacity:.7}
+
   /* ============== TESTIMONIALS ============== */
   .testi{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .t-card{border:1px solid var(--line);border-radius:18px;padding:32px;background:linear-gradient(180deg,color-mix(in oklab, var(--cream) 3%, transparent),transparent);position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:300px}
@@ -405,12 +459,19 @@
     .info-stack,.info-right{max-width:100%;flex-direction:row;justify-content:center;flex-wrap:wrap;gap:14px;margin:0 auto}
     .info-card,.product-card{width:260px;flex:0 1 260px}
     .stage{width:min(440px,72vw);margin:10px auto}
+    .stage .bottle{max-height:90%;max-width:80%}
     .pgrid{grid-template-columns:repeat(2,1fr);gap:20px}
+    .pcard .img{height:280px}
+    .pcard .img img{max-width:75%}
     .split{grid-template-columns:1fr;padding:48px;gap:40px}
-    .split-r{height:460px}
+    .split-r{height:480px}
+    .split-r img{max-height:84%;max-width:68%}
     .testi{grid-template-columns:repeat(2,1fr)}
     .foot-grid{grid-template-columns:1fr 1fr;gap:40px}
-    .sec-head{flex-direction:column;align-items:flex-start;gap:20px}
+    .sec-head{flex-direction:column;align-items:flex-start;gap:18px}
+    .rating{flex-direction:row;align-items:baseline;gap:14px}
+    .rating-num{font-size:38px}
+    .rating-num span{font-size:20px}
     .hero-title{font-size:clamp(54px,9vw,120px)}
     .faq summary{font-size:22px}
   }
@@ -428,7 +489,8 @@
     .hero{padding:90px 18px 30px;min-height:auto}
     .hero-title{font-size:clamp(44px,12vw,72px);margin-top:14px}
     .eyebrow{font-size:10px;padding:6px 12px}
-    .stage{width:min(360px,80vw)}
+    .stage{width:min(380px,84vw)}
+    .stage .bottle{max-height:92%;max-width:85%}
     .info-card,.product-card{width:100%;max-width:340px;flex:0 1 100%}
     .product-card .pname{font-size:28px}
     .car-strip{grid-template-columns:1fr;gap:18px;padding-top:20px;margin-top:24px}
@@ -437,15 +499,15 @@
     .thumbs{gap:8px}
     .thumb{flex:0 0 70px;height:88px}
     .marquee-track{font-size:20px;gap:40px}
-    .pgrid{grid-template-columns:repeat(2,1fr);gap:14px}
-    .pcard{padding:20px 16px 16px;border-radius:14px}
-    .pcard .name{font-size:20px;margin-bottom:14px;min-height:46px}
-    .pcard .latin{font-size:11px}
-    .pcard .img{height:180px}
-    .pcard .img img{max-width:75%}
-    .pcard .price{font-size:18px}
-    .pcard .add{width:34px;height:34px}
-    .pcard .tag{font-size:8px;padding:4px 8px;top:14px;right:14px}
+    .pgrid{grid-template-columns:1fr;gap:16px}
+    .pcard{padding:24px 20px 20px;border-radius:16px}
+    .pcard .name{font-size:24px;margin-bottom:14px}
+    .pcard .latin{font-size:12px}
+    .pcard .img{height:340px;padding:14px}
+    .pcard .img img{max-width:62%}
+    .pcard .price{font-size:20px}
+    .pcard .add{width:38px;height:38px}
+    .pcard .tag{font-size:9px;padding:4px 9px;top:16px;right:16px}
     .chips{gap:8px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:8px;-webkit-overflow-scrolling:touch}
     .chips::-webkit-scrollbar{display:none}
     .chip{flex:0 0 auto;padding:8px 14px;font-size:12px}
@@ -453,11 +515,18 @@
     .split-l .quote{font-size:30px;line-height:1.15}
     .split-l .meta{grid-template-columns:1fr;gap:18px;margin-top:34px}
     .split-l .meta .v{font-size:30px}
-    .split-r{height:340px}
+    .split-r{height:420px}
+    .split-r img{max-height:88%;max-width:72%}
+    .split-r .ring1{width:min(360px,88%)}
+    .split-r .ring2{width:min(240px,66%)}
     .split-r .pin{font-size:9px;padding:5px 8px}
-    .split-r .pin1{top:10%;right:8%}
-    .split-r .pin2{bottom:14%;left:6%}
-    .split-r .pin3{top:50%;right:4%}
+    .split-r .pin1{top:8%;right:6%}
+    .split-r .pin2{bottom:10%;left:4%}
+    .split-r .pin3{top:50%;right:2%}
+    .rating{flex-direction:row;align-items:baseline;gap:12px}
+    .rating-num{font-size:32px}
+    .rating-num span{font-size:18px}
+    .rating-label{font-size:10px;letter-spacing:.18em}
     .ben{grid-template-columns:1fr;gap:14px}
     .ben-card{min-height:auto;padding:24px 22px}
     .ben-card h3{font-size:20px}
@@ -487,7 +556,8 @@
     .section{padding:60px 14px}
     .hero{padding:80px 14px 24px}
     .hero-title{font-size:clamp(38px,11vw,54px);line-height:.95}
-    .stage{width:min(290px,82vw)}
+    .stage{width:min(340px,90vw)}
+    .stage .bottle{max-height:94%;max-width:90%}
     .stage-col{min-height:auto}
     .info-card{padding:14px 16px}
     .info-card .val{font-size:20px}
@@ -495,11 +565,11 @@
     .product-card .pname{font-size:24px}
     .product-card .desc{font-size:12px;min-height:auto}
     .product-card .price{font-size:20px}
-    .pgrid{grid-template-columns:1fr;gap:14px}
-    .pcard{padding:22px 18px 18px}
-    .pcard .img{height:200px}
-    .pcard .img img{max-width:65%}
-    .pcard .name{min-height:auto;font-size:22px}
+    .pgrid{grid-template-columns:1fr;gap:16px}
+    .pcard{padding:24px 20px 20px}
+    .pcard .img{height:320px;padding:12px}
+    .pcard .img img{max-width:70%}
+    .pcard .name{min-height:auto;font-size:24px}
     .marquee-track{font-size:16px;gap:32px}
     .marquee{padding:14px 0}
     .car-counter{font-size:32px}
@@ -507,10 +577,13 @@
     .thumb{flex:0 0 62px;height:78px}
     .split{padding:24px 18px}
     .split-l .quote{font-size:24px}
-    .split-r{height:300px}
-    .split-r img{max-height:80%;max-width:62%}
-    .split-r .ring1{width:min(280px,86%)}
-    .split-r .ring2{width:min(190px,64%)}
+    .split-r{height:380px}
+    .split-r img{max-height:88%;max-width:78%}
+    .split-r .ring1{width:min(320px,94%)}
+    .split-r .ring2{width:min(220px,72%)}
+    .split-r .pin{font-size:8px;padding:4px 7px;letter-spacing:.14em}
+    .rating-num{font-size:28px}
+    .rating-num span{font-size:16px}
     .ben-card{padding:22px 18px}
     .ben-card h3{font-size:18px}
     .ben-card p{font-size:12px}
@@ -537,8 +610,17 @@
   }
 </style>
 </head>
-<body data-da="green">
+<body data-da="green" class="loading">
 <script>document.documentElement.setAttribute('data-da', localStorage.getItem('oyayi-da') || 'green');</script>
+
+<!-- ============== INTRO LOADER ============== -->
+<div class="loader-overlay" id="loader" role="status" aria-label="Chargement">
+  <div class="loader-inner">
+    <div class="loader-mark"></div>
+    <div class="loader-brand">OYAYI <small>NATURE · TOGO</small></div>
+    <div class="loader-bar"><i></i></div>
+  </div>
+</div>
 
 <!-- ============== NAV ============== -->
 <header class="nav">
@@ -755,9 +837,9 @@
       <div class="sec-tag">// Avis vérifiés · 412 témoignages</div>
       <h2 class="sec-title">Ils ont adopté<br/>nos <em>huiles essentielles</em>.</h2>
     </div>
-    <div class="sec-tag" style="text-align:right">
-      <div style="font-family:'Fraunces',serif;font-weight:300;font-size:48px;color:var(--cream);line-height:1">4,9<span style="color:var(--accent);font-size:24px">★</span></div>
-      <div style="margin-top:6px">// Note moyenne sur Google</div>
+    <div class="rating">
+      <div class="rating-num">4,9<span aria-hidden="true">★</span></div>
+      <div class="rating-label">// Note moyenne sur Google</div>
     </div>
   </div>
   <div class="testi">
@@ -845,6 +927,28 @@
 </button>
 
 <script>
+/* ============================================================
+   INTRO LOADER — hide once the page (and images) are ready
+   ============================================================ */
+(function(){
+  const loader = document.getElementById('loader');
+  if (!loader) return;
+  const start = performance.now();
+  const MIN_DISPLAY = 1100; // ms — laisser le temps de voir l'animation
+  function hide(){
+    const wait = Math.max(0, MIN_DISPLAY - (performance.now() - start));
+    setTimeout(()=>{
+      loader.classList.add('hidden');
+      document.body.classList.remove('loading');
+      setTimeout(()=>loader.remove(), 800);
+    }, wait);
+  }
+  if (document.readyState === 'complete') hide();
+  else window.addEventListener('load', hide, { once:true });
+  // garde-fou : si window.load n'arrive jamais (image bloquée), on cache après 4s
+  setTimeout(hide, 4000);
+})();
+
 /* ============================================================
    PRODUCT DATA — each entry has theme colors that drive the bg
    ============================================================ */

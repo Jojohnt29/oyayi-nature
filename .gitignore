@@ -21,3 +21,5 @@ dist/
 
 # Source assets (not needed for production site)
 uploads/*.blend
+
+.vercel
