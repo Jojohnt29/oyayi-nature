@@ -238,7 +238,7 @@ APROPOS_BODY = """
   </div></div>
   <div class="distinctions">
 """ + ''.join(
-        f'    <div class="distinction"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="m9 12 2 2 4-4"/></svg></div><span class="lab">Distinction · {i:02d}</span></div>\n'
+        f'    <div class="distinction"><img src="assets/distinctions/{i:02d}.jpg" alt="Distinction OYAYI {i:02d}" loading="lazy"/><span class="lab">Distinction · {i:02d}</span></div>\n'
         for i in range(1, 9)
     ) + """  </div>
   <p style="margin-top:30px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--cream-2);opacity:.6;text-transform:uppercase">// 8 distinctions reçues — Cotonou · Bénin</p>
@@ -493,10 +493,38 @@ document.querySelectorAll('.pack .add').forEach(btn => {
 def cat_section(num, total, anchor, title_html, desc, subcats):
     cards = ''
     for sub_title, items in subcats:
-        cards += f'  <div class="subcat"><h3>{sub_title}</h3><div class="mini-grid">\n'
+        # Find a cover image for the subcat (first item with image)
+        cover_html = ''
+        cover_map = {
+            'Diffuseurs':         'assets/catalog/diffuseurs-cover.jpg',
+            'Inhalateurs':        'assets/catalog/inhalateurs-cover.jpg',
+            'Synergies aromatiques': 'assets/catalog/synergies-cover.jpg',
+            'Huiles végétales':   'assets/catalog/hv-cover.jpg',
+            'Macérats huileux':   'assets/catalog/macerats-cover.jpg',
+            'Huiles de massage':  'assets/catalog/massages-cover.jpg',
+            'Beurres végétaux':   'assets/catalog/beurres-cover.jpg',
+            'Argiles &amp; sels': 'assets/catalog/argiles-cover.jpg',
+            'Tisanes &amp; thés': 'assets/catalog/tisane-cover.png',
+            'Poudres':            'assets/catalog/poudres-cover.png',
+            'Eaux florales':      'assets/catalog/eaux-florales-cover.jpg',
+            'Jus &amp; teintures':'assets/catalog/teintures-cover.jpg',
+            'Miel pur':           'assets/catalog/miel-pur-cover.jpg',
+            'Miels aromatisés':   'assets/catalog/miels-aromatises-cover.jpg',
+            'Crèmes fouettées':   'assets/catalog/cremes-cover.jpg',
+            'Bientôt disponible': 'assets/catalog/savons-cover.jpg',
+        }
+        if sub_title in cover_map:
+            cover_html = f'<span class="cover"><img src="{cover_map[sub_title]}" alt=""/></span>'
+
+        cards += f'  <div class="subcat"><h3>{cover_html}{sub_title}</h3><div class="mini-grid">\n'
         for nm, pr in items:
             pr_html = f'<div class="pr">{pr} CFA</div>' if pr else '<div class="pr tba">À venir</div>'
-            cards += f'    <div class="mini-card"><div class="nm">{nm}</div>{pr_html}</div>\n'
+            img_src = IMG_MAP.get(nm)
+            if img_src:
+                pimg = f'<div class="pimg"><img src="{img_src}" alt="{nm}" loading="lazy"/></div>'
+            else:
+                pimg = f'<div class="pimg placeholder">{PLACEHOLDER_SVG}</div>'
+            cards += f'    <div class="mini-card">{pimg}<div class="body"><div class="nm">{nm}</div>{pr_html}</div></div>\n'
         cards += '  </div></div>\n'
     return f"""
 <section class="cat-section" id="{anchor}">
@@ -509,6 +537,45 @@ def cat_section(num, total, anchor, title_html, desc, subcats):
   </div>
 {cards}</section>
 """
+
+# Map product names → local image (assets/catalog or assets/products)
+IMG_MAP = {
+    'HE Tchayo · Basilic Africain':  'assets/products/tchayo.png',
+    'HE Basilic':                    'assets/catalog/he-basilic.png',
+    'HE Ail':                        'assets/catalog/he-ail.png',
+    'HE Bergamote':                  'assets/products/orange-douce.png',  # fallback agrume local
+    'HE Laurier Noble':              'assets/products/laurier.png',
+    'HE Lavande Vraie':              'assets/products/lavande.png',
+    'HE Néroli':                     'assets/products/neroli.png',
+    'HE Niaouli':                    'assets/products/niaouli.png',
+    'HE Menthe Poivrée':             'assets/products/menthe-poivree.png',
+    'HE Origan':                     'assets/products/origan.png',
+    'HE Mandarine':                  'assets/products/mandarine.png',
+    'HE Orange Douce':               'assets/products/orange-douce.png',
+    'HE Palmarosa':                  'assets/products/palmarosa.png',
+    'HE Myrrhe':                     'assets/products/myrrhe.png',
+    'HE Muscade':                    'assets/products/muscade.png',
+    'Pack les 5 indispensables':     'assets/catalog/pack-5-indispensables.jpg',
+
+    'Diffuseur à bâton':             'assets/catalog/diffuseur-baton.png',
+    'Diffuseur terre cuite':         'assets/catalog/diffuseur-terre-cuite.jpg',
+    'Diffuseur électrique':          'assets/catalog/diffuseur-electrique.png',
+    'AVITI · inhalateur':            'assets/catalog/aviti.png',
+
+    'Argile Blanche en poudre':      'assets/catalog/argile-blanche.jpg',
+
+    'Poudre de Cannelle':            'assets/catalog/poudre-cannelle.png',
+    'Poudre de Chébé':               'assets/catalog/poudre-chebe.png',
+    'Poudre de Clou de Girofle':     'assets/catalog/poudre-girofle.png',
+
+    'Miel Gingembre':                'assets/catalog/miel-gingembre.png',
+    'Miel Citron':                   'assets/catalog/miel-citron.png',
+    'Miel Citronnelle':              'assets/catalog/miel-citronnelle.png',
+    'Miel Eucalyptus':               'assets/catalog/miel-eucalyptus.png',
+    'Miel Agrumes':                  'assets/catalog/miel-agrumes.png',
+}
+
+PLACEHOLDER_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2C8 6 6 10 6 14a6 6 0 0 0 12 0c0-4-2-8-6-12z"/></svg>'
 
 PRODUITS_BODY = """
 <section class="page-hero">

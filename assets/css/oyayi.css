@@ -795,3 +795,30 @@
   /* Cart badge update animation */
   .cart-badge{display:inline-flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:11px;background:var(--accent);color:var(--cream);padding:2px 7px;border-radius:999px;min-width:24px;transition:transform .25s}
   .cart-badge.bump{transform:scale(1.3)}
+
+
+  /* ---- Mini-card with product photo ---- */
+  .mini-card{padding:0;overflow:hidden;min-height:200px}
+  .mini-card .pimg{height:140px;background:radial-gradient(ellipse at 50% 70%,color-mix(in oklab,var(--accent) 18%,transparent),transparent 65%);display:grid;place-items:center;border-bottom:1px solid var(--hairline);overflow:hidden;padding:8px}
+  .mini-card .pimg img{max-height:100%;max-width:75%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4));transition:transform .35s}
+  .mini-card:hover .pimg img{transform:translateY(-3px)}
+  .mini-card .pimg.placeholder{background:linear-gradient(135deg,color-mix(in oklab,var(--accent) 22%,var(--bg-mid)),var(--bg-deep))}
+  .mini-card .pimg.placeholder svg{width:38px;height:38px;color:color-mix(in oklab,var(--cream) 30%,transparent)}
+  .mini-card .body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;gap:6px}
+  .mini-card .nm{font-family:"Fraunces",serif;font-weight:400;font-size:16px;line-height:1.15;color:var(--cream)}
+  .mini-card .pr{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.05em;color:var(--accent);margin-top:auto}
+  .mini-card .pr.tba{color:var(--cream-2);opacity:.55}
+
+  /* ---- Distinctions: real photos ---- */
+  .distinction img{display:block;width:100%;height:100%;object-fit:cover}
+  .distinction .ph{display:none}
+  .distinction.no-img .ph{display:grid}
+
+  /* ---- Subcat cover thumb ---- */
+  .subcat h3 .cover{width:36px;height:36px;border-radius:8px;overflow:hidden;border:1px solid var(--line);display:inline-block;flex:0 0 36px}
+  .subcat h3 .cover img{width:100%;height:100%;object-fit:cover}
+
+  @media (max-width:680px){
+    .mini-card .pimg{height:160px}
+    .mini-card .nm{font-size:15px}
+  }
