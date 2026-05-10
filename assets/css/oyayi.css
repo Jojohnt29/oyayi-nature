@@ -8,18 +8,18 @@
      gris    #555555  noir #1A1A1A  blanc #FFFFFF
   ============================================================ */
   :root[data-da="green"]{
-    --bg-deep:#0a1a0d;       /* very dark forest, derived from #1B5E20 */
-    --bg-mid:#0f2a14;
-    --bg-soft:#1B5E20;       /* OFFICIAL primary deep green */
-    --bg-soft-2:#2E7D32;     /* OFFICIAL medium green */
+    --bg-deep:#1B5E20;       /* OFFICIAL primary brand green = page background */
+    --bg-mid:#164C1A;        /* slightly darker green for cards (depth) */
+    --bg-soft:#2E7D32;       /* OFFICIAL medium green for accent surfaces */
+    --bg-soft-2:#0F3712;     /* deepest green for footer / contrast layers */
     --cream:#FAFAF7;         /* OFFICIAL ivoire */
     --cream-2:#FFF8E1;       /* OFFICIAL or-cl light cream */
     --leaf-light:#A5D6A7;    /* light pale green, used in the flyer */
     --accent:#C8A84B;        /* OFFICIAL or — gold accent */
     --accent-2:#9B8338;      /* deeper gold */
     --ink:#1A1A1A;           /* OFFICIAL noir */
-    --line:rgba(250,250,247,.16);
-    --hairline:rgba(250,250,247,.08);
+    --line:rgba(250,250,247,.20);
+    --hairline:rgba(250,250,247,.10);
   }
   /* Brun · Terre — alternative warm theme tuned to brand: gold accent on warm base */
   :root[data-da="brown"]{
@@ -44,7 +44,7 @@
   body.loading{overflow:hidden}
   .loader-overlay{
     position:fixed;inset:0;z-index:9999;
-    background:radial-gradient(ellipse at 50% 60%, color-mix(in oklab, var(--accent) 12%, var(--bg-deep)), var(--bg-deep) 70%);
+    background:radial-gradient(ellipse at 50% 60%, color-mix(in oklab, var(--accent) 18%, var(--bg-soft-2)), var(--bg-soft-2) 70%);
     display:grid;place-items:center;
     transition:opacity .7s ease, visibility .7s ease;
   }
@@ -197,7 +197,7 @@
     border:1px solid var(--line);
     backdrop-filter:blur(16px);
     border-radius:14px;padding:16px 18px;
-    box-shadow:0 30px 60px rgba(0,0,0,.4);
+    box-shadow:0 30px 60px rgba(0,0,0,.55);
   }
   .info-card .lab{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream-2);opacity:.7;margin-bottom:8px;font-family:"JetBrains Mono",monospace}
   .info-card .val{font-family:"Playfair Display","Fraunces",serif;font-size:24px;font-weight:300;line-height:1.05}
@@ -246,7 +246,7 @@
     background:color-mix(in oklab, var(--cream) 4%, transparent);
     border:1px solid var(--line);backdrop-filter:blur(16px);
     border-radius:18px;padding:22px;
-    box-shadow:0 30px 60px rgba(0,0,0,.4);
+    box-shadow:0 30px 60px rgba(0,0,0,.55);
   }
   .product-card .latin{font-family:"Playfair Display","Fraunces",serif;font-style:italic;font-size:13px;color:var(--cream-2);opacity:.7}
   .product-card .pname{font-family:"Playfair Display","Fraunces",serif;font-size:34px;font-weight:300;line-height:1;margin-top:6px;letter-spacing:-.01em}
@@ -306,7 +306,7 @@
   /* ============== MARQUEE ============== */
   .marquee{
     position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    padding:18px 0;overflow:hidden;background:color-mix(in oklab, var(--bg-deep) 70%, #000);
+    padding:18px 0;overflow:hidden;background:var(--bg-soft-2);
   }
   .marquee-track{display:flex;gap:60px;white-space:nowrap;animation:scroll 50s linear infinite;font-family:"Playfair Display","Fraunces",serif;font-size:28px;font-style:italic;color:var(--cream-2);opacity:.85}
   .marquee-track i{font-style:normal;color:var(--accent);font-family:"JetBrains Mono",monospace;font-size:14px;letter-spacing:.3em}
@@ -329,7 +329,7 @@
   /* product grid */
   .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
   .pcard{
-    background:linear-gradient(180deg,color-mix(in oklab, var(--bg-mid) 90%, transparent),color-mix(in oklab, var(--bg-deep) 90%, transparent));
+    background:linear-gradient(180deg,color-mix(in oklab, var(--bg-soft-2) 75%, var(--bg-mid)),color-mix(in oklab, var(--bg-soft-2) 90%, var(--bg-mid)));
     border:1px solid var(--line);
     border-radius:18px;padding:28px 22px 22px;
     position:relative;overflow:hidden;
@@ -341,8 +341,8 @@
   .pcard .name{font-family:"Playfair Display","Fraunces",serif;font-weight:400;font-size:24px;line-height:1.05;letter-spacing:-.01em;margin-bottom:18px}
   .pcard .img{height:230px;display:grid;place-items:center;border-radius:12px;overflow:hidden;width:100%;padding:10px}
   .pcard .img{background:radial-gradient(ellipse at 50% 70%, color-mix(in oklab, var(--c-glow, var(--accent)) 22%, transparent), transparent 65%)}
-  .pcard .img img{max-height:100%;max-width:60%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 20px 30px rgba(0,0,0,.5))}
-  .pcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);position:relative;background:linear-gradient(180deg,color-mix(in oklab, var(--bg-mid) 90%, transparent),color-mix(in oklab, var(--bg-deep) 90%, transparent));z-index:2}
+  .pcard .img img{max-height:100%;max-width:60%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 20px 30px rgba(0,0,0,.6))}
+  .pcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);position:relative;background:linear-gradient(180deg,color-mix(in oklab, var(--bg-soft-2) 75%, var(--bg-mid)),color-mix(in oklab, var(--bg-soft-2) 90%, var(--bg-mid)));z-index:2}
   .pcard .price{font-family:"Playfair Display","Fraunces",serif;font-size:22px;font-weight:300}
   .pcard .price small{font-family:"DM Sans","Inter",sans-serif;font-size:11px;color:var(--cream-2);opacity:.6;margin-left:6px}
   .pcard .add{width:38px;height:38px;border-radius:50%;background:var(--cream);color:var(--ink);display:grid;place-items:center;transition:all .2s}
@@ -360,7 +360,7 @@
   .split-l .meta .v{font-family:"Playfair Display","Fraunces",serif;font-size:38px;font-weight:300;line-height:1}
   .split-l .meta .l{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-2);opacity:.7;margin-top:8px}
   .split-r{position:relative;z-index:2;display:grid;place-items:center;height:560px;overflow:hidden;border-radius:18px}
-  .split-r img{max-height:78%;max-width:55%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 40px 60px rgba(0,0,0,.5));position:relative;z-index:2}
+  .split-r img{max-height:78%;max-width:55%;width:auto;height:auto;object-fit:contain;filter:drop-shadow(0 40px 60px rgba(0,0,0,.6));position:relative;z-index:2}
   .split-r .ring{position:absolute;left:50%;top:50%;border:1px dashed color-mix(in oklab, var(--cream) 18%, transparent);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%)}
   .split-r .ring1{width:min(460px,82%);aspect-ratio:1;animation:rot-c 60s linear infinite}
   .split-r .ring2{width:min(320px,62%);aspect-ratio:1;animation:rot-c 40s linear infinite reverse;border-style:dotted}
@@ -372,7 +372,7 @@
 
   /* ============== BENEFITS ============== */
   .ben{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-  .ben-card{border:1px solid var(--line);border-radius:18px;padding:32px 28px;background:linear-gradient(180deg,color-mix(in oklab, var(--cream) 2%, transparent),transparent);min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:all .3s}
+  .ben-card{border:1px solid var(--line);border-radius:18px;padding:32px 28px;background:linear-gradient(180deg,color-mix(in oklab, var(--bg-soft-2) 60%, var(--bg-mid)),color-mix(in oklab, var(--bg-soft-2) 80%, var(--bg-mid)));min-height:280px;display:flex;flex-direction:column;justify-content:space-between;transition:all .3s}
   .ben-card:hover{background:linear-gradient(180deg,color-mix(in oklab, var(--accent) 8%, transparent),transparent);border-color:color-mix(in oklab, var(--accent) 40%, transparent)}
   .ben-card .num{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--cream-2);opacity:.6}
   .ben-card .glyph{width:54px;height:54px;border-radius:14px;background:color-mix(in oklab, var(--accent) 14%, transparent);border:1px solid color-mix(in oklab, var(--accent) 30%, transparent);display:grid;place-items:center;color:var(--accent);margin-top:16px}
@@ -387,7 +387,7 @@
 
   /* ============== TESTIMONIALS ============== */
   .testi{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .t-card{border:1px solid var(--line);border-radius:18px;padding:32px;background:linear-gradient(180deg,color-mix(in oklab, var(--cream) 3%, transparent),transparent);position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:300px}
+  .t-card{border:1px solid var(--line);border-radius:18px;padding:32px;background:linear-gradient(180deg,color-mix(in oklab, var(--bg-soft-2) 60%, var(--bg-mid)),color-mix(in oklab, var(--bg-soft-2) 80%, var(--bg-mid)));position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:300px}
   .t-card .stars{display:flex;gap:3px;color:var(--accent);margin-bottom:16px}
   .t-card .quote{font-family:"Playfair Display","Fraunces",serif;font-weight:300;font-size:22px;line-height:1.3;letter-spacing:-.005em}
   .t-card .who{display:flex;align-items:center;gap:14px;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
@@ -409,7 +409,7 @@
   .faq .a strong{color:var(--cream);font-weight:500}
 
   /* ============== FOOTER ============== */
-  footer{border-top:1px solid var(--line);background:color-mix(in oklab, var(--bg-deep) 70%, #000);padding:80px 40px 40px;margin-top:80px}
+  footer{border-top:1px solid var(--line);background:var(--bg-soft-2);padding:80px 40px 40px;margin-top:80px}
   .foot-grid{max-width:1480px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:60px}
   .foot-grid h6{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-2);opacity:.7;margin-bottom:18px}
   .foot-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -428,7 +428,7 @@
     background:var(--cream);color:var(--ink);
     font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
     cursor:pointer;border:none;
-    box-shadow:0 14px 30px rgba(0,0,0,.4);
+    box-shadow:0 14px 30px rgba(0,0,0,.55);
     transition:transform .2s, box-shadow .2s;
   }
   .theme-fab:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(0,0,0,.55)}
@@ -605,7 +605,7 @@
   /* --- TOUCH OPTIMIZATIONS --- */
   @media (hover:none) and (pointer:coarse){
     .pcard:hover{transform:none}
-    .ben-card:hover{background:linear-gradient(180deg,color-mix(in oklab, var(--cream) 2%, transparent),transparent)}
+    .ben-card:hover{background:linear-gradient(180deg,color-mix(in oklab, var(--bg-soft-2) 60%, var(--bg-mid)),color-mix(in oklab, var(--bg-soft-2) 80%, var(--bg-mid)))}
     .thumb{min-width:64px}
     .thumbs{padding:6px 16px;-webkit-overflow-scrolling:touch}
     .add,.icon-btn,.arr,.cta{min-height:42px}
@@ -697,6 +697,17 @@
   .subcat{margin-top:42px}
   .subcat h3{font-family:"Playfair Display","Fraunces",serif;font-weight:300;font-style:italic;font-size:24px;color:var(--cream);margin-bottom:20px;display:flex;align-items:center;gap:14px}
   .subcat h3::before{content:"";flex:0 0 24px;height:1px;background:var(--accent)}
+  .subcat h3 .cover{
+    flex:0 0 44px;width:44px;height:44px;
+    border-radius:10px;overflow:hidden;
+    border:1px solid color-mix(in oklab,var(--accent) 30%,transparent);
+    display:inline-block;
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+  }
+  .subcat h3 .cover img{
+    width:100%;height:100%;object-fit:cover;
+    display:block;max-width:100%;
+  }
   .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
   .mini-card{padding:18px 16px;border-radius:14px;border:1px solid var(--line);background:color-mix(in oklab,var(--cream) 3%,transparent);transition:all .25s;display:flex;flex-direction:column;gap:6px;cursor:pointer}
   .mini-card:hover{border-color:color-mix(in oklab,var(--accent) 50%,transparent);background:color-mix(in oklab,var(--accent) 8%,transparent)}
@@ -728,7 +739,7 @@
   .form-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
   .form-field label{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream-2);opacity:.7}
   .form-field input,.form-field textarea,.form-field select{
-    background:color-mix(in oklab,var(--bg-deep) 60%,transparent);
+    background:color-mix(in oklab,var(--bg-soft-2) 70%,var(--bg-mid));
     border:1px solid var(--line);border-radius:10px;padding:14px 16px;
     color:var(--cream);font-family:"DM Sans","Inter",sans-serif;font-size:14px;
     transition:border-color .2s, background .2s;
@@ -760,7 +771,7 @@
     background:linear-gradient(180deg,color-mix(in oklab,var(--bg-mid) 90%,transparent),color-mix(in oklab,var(--bg-deep) 90%,transparent));
     position:relative;transition:all .3s;display:flex;flex-direction:column;cursor:pointer;
   }
-  .distinction:hover{transform:translateY(-4px);border-color:color-mix(in oklab,var(--accent) 50%,transparent);box-shadow:0 24px 50px rgba(0,0,0,.4)}
+  .distinction:hover{transform:translateY(-4px);border-color:color-mix(in oklab,var(--accent) 50%,transparent);box-shadow:0 24px 50px rgba(0,0,0,.55)}
   .distinction .photo{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(135deg,color-mix(in oklab,var(--accent) 20%,var(--bg-mid)),var(--bg-deep))}
   .distinction .photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s;display:block}
   .distinction:hover .photo img{transform:scale(1.06)}
@@ -817,7 +828,7 @@
   .newsletter h3 em{font-style:italic;color:var(--accent)}
   .newsletter p{margin-top:14px;color:var(--cream-2);font-size:14px;line-height:1.6}
   .newsletter form{display:flex;gap:8px;flex-wrap:wrap}
-  .newsletter input{flex:1;min-width:200px;background:color-mix(in oklab,var(--bg-deep) 60%,transparent);border:1px solid var(--line);border-radius:999px;padding:14px 22px;color:var(--cream);font-family:"DM Sans","Inter",sans-serif;font-size:14px}
+  .newsletter input{flex:1;min-width:200px;background:color-mix(in oklab,var(--bg-soft-2) 70%,var(--bg-mid));border:1px solid var(--line);border-radius:999px;padding:14px 22px;color:var(--cream);font-family:"DM Sans","Inter",sans-serif;font-size:14px}
   .newsletter input:focus{outline:none;border-color:var(--accent)}
   .newsletter button{padding:14px 24px;background:var(--cream);color:var(--ink);border-radius:999px;font-weight:500;font-size:14px;cursor:pointer;border:none;transition:all .2s;font-family:"DM Sans","Inter",sans-serif}
   .newsletter button:hover{background:var(--accent);color:var(--cream)}
@@ -895,7 +906,7 @@
   .cart-list{flex:1;overflow-y:auto;padding:8px 26px}
   .cart-item{display:grid;grid-template-columns:60px 1fr auto;gap:14px;padding:18px 0;border-bottom:1px solid var(--hairline);align-items:center}
   .cart-item .ci-img{width:60px;height:60px;border-radius:10px;background:color-mix(in oklab,var(--accent) 14%,var(--bg-mid));display:grid;place-items:center;overflow:hidden;border:1px solid var(--hairline)}
-  .cart-item .ci-img img{max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.4))}
+  .cart-item .ci-img img{max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.55))}
   .cart-item .ci-img .ph{color:var(--cream-2);opacity:.5}
   .cart-item .ci-info .nm{font-family:"Playfair Display","Fraunces",serif;font-weight:400;font-size:15px;line-height:1.15;color:var(--cream)}
   .cart-item .ci-info .pr{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--accent);margin-top:4px}
@@ -929,7 +940,7 @@
   .cart-table .row{display:grid;grid-template-columns:80px 1fr 100px 110px 30px;gap:14px;padding:20px 24px;border-bottom:1px solid var(--hairline);align-items:center}
   .cart-table .row:last-child{border-bottom:0}
   .cart-table .row .img{width:80px;height:80px;border-radius:12px;background:radial-gradient(ellipse at 50% 70%,color-mix(in oklab,var(--accent) 18%,transparent),transparent 70%);display:grid;place-items:center;overflow:hidden;border:1px solid var(--hairline)}
-  .cart-table .row .img img{max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.4))}
+  .cart-table .row .img img{max-width:80%;max-height:80%;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.55))}
   .cart-table .row .img .ph{color:var(--cream-2);opacity:.4}
   .cart-table .row .nm{font-family:"Playfair Display","Fraunces",serif;font-weight:400;font-size:18px;line-height:1.15;color:var(--cream)}
   .cart-table .row .nm .sub{display:block;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--cream-2);opacity:.6;margin-top:4px;text-transform:uppercase}
@@ -948,7 +959,7 @@
   .summary .line.total{margin-top:12px;padding-top:18px;border-top:1px solid var(--line);border-bottom:0;font-family:"Playfair Display","Fraunces",serif;font-size:24px;font-weight:300;color:var(--cream)}
   .summary .line.total span:last-child{color:var(--accent)}
   .summary .promo{margin:18px 0;display:flex;gap:8px}
-  .summary .promo input{flex:1;background:color-mix(in oklab,var(--bg-deep) 60%,transparent);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--cream);font-family:"DM Sans","Inter",sans-serif;font-size:13px}
+  .summary .promo input{flex:1;background:color-mix(in oklab,var(--bg-soft-2) 70%,var(--bg-mid));border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--cream);font-family:"DM Sans","Inter",sans-serif;font-size:13px}
   .summary .promo button{padding:12px 18px;border-radius:10px;background:none;border:1px solid var(--line);color:var(--cream-2);font-size:12px;cursor:pointer;transition:all .2s}
   .summary .promo button:hover{background:var(--accent);border-color:var(--accent);color:var(--cream)}
   .summary .pay-btn{width:100%;margin-top:18px;padding:18px;border-radius:12px;background:var(--cream);color:var(--ink);font-weight:500;font-size:14px;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;font-family:"DM Sans","Inter",sans-serif}
@@ -1041,3 +1052,68 @@
     .article-body blockquote{font-size:17px;padding:16px 20px}
     .related-articles{padding:40px 18px 0}
   }
+
+
+  /* ============================================================
+     UI/UX HARMONIZATION (post-charter)
+     Accessibility: keyboard focus, prefers-reduced-motion, scrollbars
+     ============================================================ */
+  *:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+  button:focus-visible, a:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    box-shadow:0 0 0 6px color-mix(in oklab, var(--accent) 25%, transparent);
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.05ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:var(--bg-soft-2)}
+  ::-webkit-scrollbar-thumb{background:color-mix(in oklab,var(--accent) 40%,var(--bg-mid));border-radius:6px;border:2px solid var(--bg-soft-2)}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+  html{scrollbar-color:color-mix(in oklab,var(--accent) 40%,var(--bg-mid)) var(--bg-soft-2);scrollbar-width:thin}
+
+  .pcard, .pack, .domain, .ben-card, .t-card, .blog-card, .mini-card, .info-card, .product-card, .contact-block, .diff, .distinction, .article-cover{
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 12px 30px rgba(0,0,0,.35);
+  }
+  .pcard:hover, .pack:hover, .domain:hover, .blog-card:hover, .mini-card:hover, .distinction:hover{
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 22px 50px rgba(0,0,0,.55), 0 0 0 1px color-mix(in oklab,var(--accent) 30%,transparent);
+  }
+
+  footer{background:linear-gradient(180deg, var(--bg-soft-2) 0%, color-mix(in oklab, var(--bg-soft-2) 60%, #000) 100%) !important;}
+
+  .section, .cat-section{position:relative}
+  .car-strip{border-top-color:color-mix(in oklab,var(--cream) 22%,transparent)}
+
+  .nav{background:linear-gradient(to bottom, color-mix(in oklab, var(--bg-soft-2) 88%, transparent) 0%, color-mix(in oklab, var(--bg-soft-2) 50%, transparent) 70%, transparent 100%) !important;}
+
+  .pcard .price small, .pack .price small, .product-card .price small{color:var(--cream-2)}
+
+  .cta:hover{background:#fff;box-shadow:0 12px 28px rgba(0,0,0,.45)}
+  .cta.ghost:hover{background:color-mix(in oklab,var(--cream) 12%,transparent);border-color:var(--cream)}
+
+  .chip.active{background:var(--accent);color:var(--ink);border-color:var(--accent);box-shadow:0 6px 16px color-mix(in oklab,var(--accent) 45%,transparent)}
+
+  .faq summary{transition:background .25s, color .25s, padding-left .25s}
+  .faq summary:hover{padding-left:8px}
+  .faq details[open] summary{color:var(--accent)}
+
+  .distinction .badge{background:color-mix(in oklab, var(--bg-soft-2) 85%, transparent)}
+
+  .nav-links a.active::after{height:2px;background:var(--accent);box-shadow:0 0 12px color-mix(in oklab,var(--accent) 60%,transparent)}
+  .nav-links a:hover{color:var(--accent);opacity:1}
+
+  .mini-card .pr .add-mini{box-shadow:0 4px 10px rgba(0,0,0,.3)}
+
+  body{text-rendering:optimizeLegibility;font-feature-settings:"kern" 1, "liga" 1, "ss01" 1}
+
+  ::selection{background:var(--accent);color:var(--ink)}
