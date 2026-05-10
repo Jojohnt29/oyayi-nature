@@ -27,3 +27,5 @@ _doc_extract.txt
 OYAYI_site_complet.docx
 
 .vercel
+
+__pycache__/

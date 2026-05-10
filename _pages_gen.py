@@ -54,7 +54,7 @@ def page_shell(title, desc, active, body_html, extra_head=''):
   <div class="nav-right">
     <button class="icon-btn" aria-label="Recherche"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
     <button class="icon-btn" aria-label="Compte"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></button>
-    <a href="coffrets-packs.html" class="cta">Panier <span class="cart-badge">00</span></a>
+    <a href="panier.html" class="cta">Panier <span class="cart-badge">00</span></a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
 </header>
@@ -518,13 +518,23 @@ def cat_section(num, total, anchor, title_html, desc, subcats):
 
         cards += f'  <div class="subcat"><h3>{cover_html}{sub_title}</h3><div class="mini-grid">\n'
         for nm, pr in items:
-            pr_html = f'<div class="pr">{pr} CFA</div>' if pr else '<div class="pr tba">À venir</div>'
+            slug = nm.lower().replace('·', '').replace("'", '').replace('é','e').replace('è','e').replace('ê','e').replace('à','a').replace('â','a').replace('ô','o').replace('î','i').replace('ï','i').replace('ç','c')
+            slug = ''.join(c if c.isalnum() else '-' for c in slug).strip('-')
+            slug = '-'.join(filter(None, slug.split('-')))
             img_src = IMG_MAP.get(nm)
+            data_attrs = f'data-id="{slug}" data-name="{nm.replace("&amp;","et")}" data-price="{pr or ""}"'
             if img_src:
-                pimg = f'<div class="pimg"><img src="{img_src}" alt="{nm}" loading="lazy"/></div>'
+                data_attrs += f' data-image="{img_src}"'
+                bleed = ' class="bleed"' if nm in WHITE_BG_PRODUCTS else ''
+                pimg = f'<div class="pimg"><img src="{img_src}" alt="{nm}" loading="lazy"{bleed}/></div>'
             else:
                 pimg = f'<div class="pimg placeholder">{PLACEHOLDER_SVG}</div>'
-            cards += f'    <div class="mini-card">{pimg}<div class="body"><div class="nm">{nm}</div>{pr_html}</div></div>\n'
+            if pr:
+                add_btn = '<button class="add-mini" aria-label="Ajouter au panier"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>'
+                pr_html = f'<div class="pr"><span>{pr} CFA</span>{add_btn}</div>'
+            else:
+                pr_html = '<div class="pr tba">À venir</div>'
+            cards += f'    <div class="mini-card" {data_attrs}>{pimg}<div class="body"><div class="nm">{nm}</div>{pr_html}</div></div>\n'
         cards += '  </div></div>\n'
     return f"""
 <section class="cat-section" id="{anchor}">
@@ -576,6 +586,9 @@ IMG_MAP = {
 }
 
 PLACEHOLDER_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2C8 6 6 10 6 14a6 6 0 0 0 12 0c0-4-2-8-6-12z"/></svg>'
+
+# Products with white background that should blend with the dark UI
+WHITE_BG_PRODUCTS = {'Diffuseur à bâton'}
 
 PRODUITS_BODY = """
 <section class="page-hero">
@@ -716,14 +729,24 @@ PRODUITS_BODY = """
 
 <script>
 document.querySelectorAll('.mini-card').forEach(card => {
+  if (!card.dataset.price) return;
+  card.querySelectorAll('.add-mini').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      window.OYAYI && window.OYAYI.addToCart({
+        id: card.dataset.id,
+        name: card.dataset.name,
+        price: card.dataset.price,
+        image: card.dataset.image || ''
+      });
+    });
+  });
   card.addEventListener('click', () => {
-    const name = card.querySelector('.nm').textContent;
-    const pr = card.querySelector('.pr').textContent;
-    if (pr.includes('À venir')) return;
     window.OYAYI && window.OYAYI.addToCart({
-      id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      name: name,
-      price: pr.replace(' CFA', '')
+      id: card.dataset.id,
+      name: card.dataset.name,
+      price: card.dataset.price,
+      image: card.dataset.image || ''
     });
   });
 });
@@ -780,6 +803,19 @@ cards_html = '\n'.join(
     for i, (slug, title, cat, date, excerpt) in enumerate(ARTICLES)
 )
 
+from _articles_data import ARTICLES as REAL_ARTICLES
+
+cards_html_local = '\n'.join(
+    f'''    <a class="blog-card" href="article-{a['slug']}.html" style="text-decoration:none">
+      <div class="cover">{ICONS[i % len(ICONS)]}</div>
+      <div class="meta"><span class="cat">{a['cat']}</span><span>{a['date']} · {a['read']}</span></div>
+      <h3>{a['title']}</h3>
+      <p class="excerpt">{a['lede']}</p>
+      <div class="read">Lire l'article →</div>
+    </a>'''
+    for i, a in enumerate(REAL_ARTICLES)
+)
+
 BLOG_BODY = f"""
 <section class="page-hero">
   <div class="theme-bg"></div>
@@ -797,19 +833,98 @@ BLOG_BODY = f"""
     <h2 class="sec-title">Le pouvoir des plantes,<br/>au quotidien.</h2>
   </div></div>
   <div class="blog-grid">
-{cards_html}
+{cards_html_local}
+  </div>
+</section>
+"""
+
+# ============================================================
+# CART PAGE — wraps a script tag that uses safe DOM API
+# ============================================================
+PANIER_BODY = """
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="theme-bg"></div>
+  <div class="grain"></div>
+  <div class="page-hero-inner">
+    <div class="crumbs"><a href="index.html">Accueil</a> // Panier</div>
+    <h1>Votre <em>panier</em>.</h1>
   </div>
 </section>
 
-<script>
-document.querySelectorAll('.blog-card').forEach(c => {{
-  c.addEventListener('click', () => {{
-    // Articles externes du site original — ouverture dans nouvel onglet
-    const slug = c.dataset.href;
-    window.open('https://oyayinature.com/' + slug + '/', '_blank', 'noopener');
-  }});
-}});
-</script>
+<section class="section" id="cartSection" style="padding-top:30px">
+  <div id="cartContent"></div>
+</section>
+
+<script src="assets/js/panier.js"></script>
+"""
+
+# ============================================================
+# CHECKOUT PAGE — wraps the safe paiement.js
+# ============================================================
+PAIEMENT_BODY = """
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="theme-bg"></div>
+  <div class="grain"></div>
+  <div class="page-hero-inner">
+    <div class="crumbs"><a href="index.html">Accueil</a> // <a href="panier.html">Panier</a> // Paiement</div>
+    <h1><em>Paiement</em> sécurisé.</h1>
+  </div>
+</section>
+
+<section class="section" style="padding-top:30px" id="checkoutWrap">
+  <div id="checkoutContent"></div>
+</section>
+
+<script src="assets/js/paiement.js"></script>
+"""
+
+# ============================================================
+# ARTICLE PAGE (one per article)
+# ============================================================
+def article_body(a, prev_a, next_a):
+    related = ''
+    for other in [prev_a, next_a]:
+        if other:
+            related += f'''      <a class="blog-card" href="article-{other['slug']}.html" style="text-decoration:none">
+        <div class="cover">{ICONS[0]}</div>
+        <div class="meta"><span class="cat">{other['cat']}</span><span>{other['read']}</span></div>
+        <h3>{other['title']}</h3>
+        <p class="excerpt">{other['lede']}</p>
+        <div class="read">Lire l'article →</div>
+      </a>'''
+    return f"""
+<article>
+  <div class="article-hero">
+    <div class="theme-bg" style="position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse 80% 70% at 50% 30%,color-mix(in oklab,var(--accent) 18%,transparent),transparent 65%),linear-gradient(180deg,var(--bg-deep) 0%,color-mix(in oklab,var(--bg-deep) 60%,var(--accent-2)) 50%,var(--bg-deep) 100%)"></div>
+    <div class="meta-row"><span class="cat">{a['cat']}</span><span>{a['date']}</span><span>· {a['read']} de lecture</span></div>
+    <h1>{a['title']}</h1>
+    <p class="lede">{a['lede']}</p>
+    <div class="article-cover"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2C8 6 6 10 6 14a6 6 0 0 0 12 0c0-4-2-8-6-12z"/></svg></div>
+  </div>
+
+  <div class="article-body">
+{a['body']}
+  </div>
+
+  <div class="article-foot">
+    <a href="blog.html" class="back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m6 6-6-6 6-6"/></svg>
+      Retour aux articles
+    </a>
+    <div class="share">
+      <a href="#" aria-label="Partager Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'_blank','noopener,width=600,height=500');return false;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.5 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Partager X" onclick="window.open('https://twitter.com/intent/tweet?url='+encodeURIComponent(location.href)+'&amp;text='+encodeURIComponent(document.title),'_blank','noopener,width=600,height=500');return false;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 3h3l-7.5 8.6L22 21h-6.8l-5-6.5L4 21H1l8-9.2L1.5 3H8.5l4.5 6 5-6z"/></svg></a>
+      <a href="#" aria-label="Partager WhatsApp" onclick="window.open('https://wa.me/?text='+encodeURIComponent(document.title+' '+location.href),'_blank','noopener');return false;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5-1.4A10 10 0 1 0 12 2zm5 14c-.2.7-1.4 1.4-2 1.4-1 .1-2.2.5-7-1.6-2.5-1-4.6-3.7-4.7-3.9-.2-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.4.2.5.7 1.7.7 1.8.1.2.1.3 0 .5l-.3.5-.3.4-.4.4c-.1.2-.3.3-.1.6 0 .3.7 1.5 1.7 2.4 1.3 1.1 2.4 1.5 2.7 1.7.3.1.5.1.7-.1l.7-.8c.2-.3.5-.2.7-.1.3.1 1.7.8 2 1l.4.2c.1.2.1.5 0 1z"/></svg></a>
+    </div>
+  </div>
+</article>
+
+<section class="related-articles">
+  <h3>Continuer la lecture</h3>
+  <div class="blog-grid">
+{related}
+  </div>
+</section>
 """
 
 # ============================================================
@@ -821,11 +936,22 @@ PAGES = [
     ('coffrets-packs.html', "OYAYI Nature — Coffrets &amp; Packs bien-être",                                   "Coffrets d'huiles essentielles, coffret de miel et 5 packs thématiques (détente, sommeil, antidouleur…).",      'coffrets-packs.html', COFFRETS_BODY),
     ('produits.html',       "OYAYI Nature — Catalogue complet · 5 univers de soin naturel",                    "Catalogue OYAYI Nature : huiles essentielles, miels, argiles, tisanes, beurres, crèmes. 100 % Bénin.",          'produits.html',       PRODUITS_BODY),
     ('blog.html',           "OYAYI Nature — Conseils &amp; Journal · Les huiles essentielles au quotidien",    "Six articles pour mieux comprendre les huiles essentielles : sommeil, stress, yoga, conservation, erreurs.",     'blog.html',           BLOG_BODY),
+    ('panier.html',         "OYAYI Nature — Votre panier",                                                     "Votre panier OYAYI Nature. Modifier, supprimer, passer au paiement.",                                            'panier.html',         PANIER_BODY),
+    ('paiement.html',       "OYAYI Nature — Paiement sécurisé",                                                "Paiement sécurisé OYAYI Nature : Mobile Money, paiement à la livraison ou carte bancaire.",                      'paiement.html',       PAIEMENT_BODY),
 ]
+
+# Add one page per blog article
+for i, a in enumerate(REAL_ARTICLES):
+    prev_a = REAL_ARTICLES[(i-1) % len(REAL_ARTICLES)]
+    next_a = REAL_ARTICLES[(i+1) % len(REAL_ARTICLES)]
+    fname = f"article-{a['slug']}.html"
+    title = f"OYAYI Nature — {a['title']}"
+    desc = a['lede'][:160]
+    PAGES.append((fname, title, desc, 'blog.html', article_body(a, prev_a, next_a)))
 
 for fname, title, desc, active, body in PAGES:
     out = page_shell(title, desc, active, body)
     with open(os.path.join(OUT_DIR, fname), 'w', encoding='utf-8', newline='\n') as f:
         f.write(out)
-    print(f'  wrote {fname:25s}  {len(out):>6} chars')
-print('Done.')
+    print(f'  wrote {fname:30s}  {len(out):>6} chars')
+print(f'Done. {len(PAGES)} pages generated.')

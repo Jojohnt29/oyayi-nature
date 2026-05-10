@@ -201,7 +201,7 @@ document.getElementById('prev').addEventListener('click', ()=>go(idx-1, true));
 $pcAdd.addEventListener('click', e=>{
   e.stopPropagation();
   const p = PRODUCTS[idx];
-  window.OYAYI && window.OYAYI.addToCart({id:p.id, name:p.name, price:p.price});
+  window.OYAYI && window.OYAYI.addToCart({id:p.id, name:p.name, price:p.price, image:`assets/products/${p.id}.png`});
 });
 go(0);
 restartAuto();
@@ -231,7 +231,7 @@ function buildPCard(p){
   const addBtn = el('button', {
     class:'add', 'aria-label':'Ajouter',
     data: { id: p.id },
-    on: { click: (e)=> { e.stopPropagation(); window.OYAYI && window.OYAYI.addToCart({id:p.id, name:p.name, price:p.price}); } }
+    on: { click: (e)=> { e.stopPropagation(); window.OYAYI && window.OYAYI.addToCart({id:p.id, name:p.name, price:p.price, image:`assets/products/${p.id}.png`}); } }
   }, [plusIcon()]);
   card.appendChild(el('div', {class:'foot'}, [priceWrap, addBtn]));
   card.addEventListener('click', (e)=>{
