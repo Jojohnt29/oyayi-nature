@@ -236,10 +236,68 @@ APROPOS_BODY = """
     <div class="sec-tag">// Galerie · Nos distinctions</div>
     <h2 class="sec-title">Des moments de <em>reconnaissance</em>.</h2>
   </div></div>
+  <p class="distinctions-intro">
+    Plus qu'une marque, OYAYI est une <strong>aventure humaine reconnue</strong> au Bénin et au-delà.
+    Salons professionnels, formations de productrices, partenariats institutionnels, reportages télévisés :
+    chaque moment ci-dessous raconte un chapitre de notre histoire — celle d'une cosmétique naturelle
+    enracinée dans la terre béninoise et portée par les femmes qui la cultivent.
+  </p>
   <div class="distinctions">
 """ + ''.join(
-        f'    <div class="distinction"><img src="assets/distinctions/{i:02d}.jpg" alt="Distinction OYAYI {i:02d}" loading="lazy"/><span class="lab">Distinction · {i:02d}</span></div>\n'
-        for i in range(1, 9)
+        f'''    <article class="distinction">
+      <div class="photo">
+        <img src="assets/distinctions/{d["num"]:02d}.jpg" alt="{d["title"]}" loading="lazy"/>
+        <span class="badge">{d["badge"]}</span>
+      </div>
+      <div class="body">
+        <span class="year">{d["year"]}</span>
+        <h4>{d["title"]}</h4>
+        <p>{d["desc"]}</p>
+      </div>
+    </article>
+'''
+        for d in [
+            {
+                'num': 1, 'badge': 'Salon · Cotonou', 'year': 'Décembre 2024',
+                'title': "Salon de l'Économie Sociale et Solidaire",
+                'desc': "Présentation de notre gamme complète d'huiles essentielles aux acteurs de l'économie solidaire de l'UEMOA. Plus de 200 visiteurs sur notre stand en trois jours.",
+            },
+            {
+                'num': 2, 'badge': 'Coopérative', 'year': 'Septembre 2024',
+                'title': "Lancement de la coopérative des productrices",
+                'desc': "47 femmes du Plateau d'Abomey rejoignent officiellement notre coopérative — formation à la culture biologique, à la récolte au bon stade et à la transformation primaire.",
+            },
+            {
+                'num': 3, 'badge': 'Reconnaissance', 'year': 'Novembre 2024',
+                'title': "Label « Fabriqué au Bénin »",
+                'desc': "Notre savoir-faire reconnu par le Ministère de l'Industrie. Le label garantit l'origine béninoise de nos plantes, de notre distillation et de notre conditionnement.",
+            },
+            {
+                'num': 4, 'badge': 'Forum', 'year': 'Octobre 2024',
+                'title': "Forum des Femmes Entrepreneures",
+                'desc': "Intervention sur le thème « Les plantes africaines, levier d'autonomisation économique ». Notre modèle inspire d'autres porteuses de projet en Afrique de l'Ouest.",
+            },
+            {
+                'num': 5, 'badge': 'Médias · ORTB', 'year': 'Juillet 2024',
+                'title': "Reportage sur le Tchayo",
+                'desc': "L'Office de Radiodiffusion et Télévision du Bénin consacre un sujet à notre travail sur le basilic africain — un plante endémique enfin valorisée à sa juste mesure.",
+            },
+            {
+                'num': 6, 'badge': 'Atelier · Kpalimé', 'year': 'Août 2024',
+                'title': "Atelier découverte aromathérapie",
+                'desc': "Sessions d'initiation à l'aromathérapie ouvertes au grand public dans notre boutique : 60 participants en deux week-ends, du diagnostic olfactif aux premières synergies.",
+            },
+            {
+                'num': 7, 'badge': 'Partenariat · Lab', 'year': 'Juin 2024',
+                'title': "Partenariat laboratoire indépendant",
+                'desc': "Signature avec un laboratoire d'analyse partenaire pour la chromatographie en phase gazeuse (CG-MS) systématique de chaque lot. La traçabilité devient une norme, pas une option.",
+            },
+            {
+                'num': 8, 'badge': 'Conférence · UAC', 'year': 'Mars 2024',
+                'title': "Conférence à l'Université d'Abomey-Calavi",
+                'desc': "« Plantes médicinales africaines & savoirs ancestraux » — intervention dans le cadre du Master Phytothérapie. Pont entre tradition orale et recherche académique.",
+            },
+        ]
     ) + """  </div>
   <p style="margin-top:30px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--cream-2);opacity:.6;text-transform:uppercase">// 8 distinctions reçues — Cotonou · Bénin</p>
 </section>

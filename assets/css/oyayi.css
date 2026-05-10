@@ -736,17 +736,36 @@
   @media (max-width:1024px){.contact-grid{grid-template-columns:1fr;gap:30px}.form-row{grid-template-columns:1fr}}
   @media (max-width:680px){.contact-form{padding:28px 22px}}
 
-  /* Distinctions gallery (À propos) */
-  .distinctions{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:40px}
-  .distinction{aspect-ratio:1;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(135deg,color-mix(in oklab,var(--accent) 18%,var(--bg-mid)),var(--bg-deep));position:relative;cursor:pointer;transition:all .3s}
-  .distinction:hover{transform:scale(1.02);border-color:color-mix(in oklab,var(--accent) 50%,transparent)}
-  .distinction img{width:100%;height:100%;object-fit:cover;transition:transform .5s;display:block}
-  .distinction:hover img{transform:scale(1.05)}
-  .distinction .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--cream-2);opacity:.4}
-  .distinction .ph svg{width:38px;height:38px}
-  .distinction .lab{position:absolute;left:14px;bottom:12px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);background:color-mix(in oklab,var(--bg-deep) 70%,transparent);padding:4px 8px;border-radius:999px;backdrop-filter:blur(8px)}
-  @media (max-width:1024px){.distinctions{grid-template-columns:repeat(3,1fr)}}
-  @media (max-width:680px){.distinctions{grid-template-columns:repeat(2,1fr)}}
+  /* Distinctions gallery (À propos) — richer card with caption */
+  .distinctions-intro{
+    margin-top:30px;max-width:860px;color:var(--cream-2);font-size:16px;line-height:1.65;
+  }
+  .distinctions-intro strong{color:var(--cream);font-weight:500}
+  .distinctions{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+  .distinction{
+    border-radius:16px;overflow:hidden;border:1px solid var(--line);
+    background:linear-gradient(180deg,color-mix(in oklab,var(--bg-mid) 90%,transparent),color-mix(in oklab,var(--bg-deep) 90%,transparent));
+    position:relative;transition:all .3s;display:flex;flex-direction:column;cursor:pointer;
+  }
+  .distinction:hover{transform:translateY(-4px);border-color:color-mix(in oklab,var(--accent) 50%,transparent);box-shadow:0 24px 50px rgba(0,0,0,.4)}
+  .distinction .photo{position:relative;aspect-ratio:4/3;overflow:hidden;background:linear-gradient(135deg,color-mix(in oklab,var(--accent) 20%,var(--bg-mid)),var(--bg-deep))}
+  .distinction .photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s;display:block}
+  .distinction:hover .photo img{transform:scale(1.06)}
+  .distinction .photo .ph{position:absolute;inset:0;display:grid;place-items:center;color:var(--cream-2);opacity:.4}
+  .distinction .photo .ph svg{width:38px;height:38px}
+  .distinction .badge{
+    position:absolute;top:12px;left:12px;
+    font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);
+    background:color-mix(in oklab,var(--bg-deep) 75%,transparent);
+    padding:5px 9px;border-radius:999px;backdrop-filter:blur(8px);border:1px solid color-mix(in oklab,var(--cream) 12%,transparent);
+  }
+  .distinction .body{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column;gap:8px}
+  .distinction .body .year{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase}
+  .distinction .body h4{font-family:"Fraunces",serif;font-weight:400;font-size:18px;line-height:1.2;color:var(--cream);letter-spacing:-.005em}
+  .distinction .body p{font-size:13px;line-height:1.55;color:var(--cream-2);margin-top:auto}
+
+  @media (max-width:1024px){.distinctions{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.distinctions{grid-template-columns:1fr}.distinction .photo{aspect-ratio:16/10}}
 
   /* Différenciateurs (À propos) */
   .diffs{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:32px}
