@@ -22,4 +22,8 @@ dist/
 # Source assets (not needed for production site)
 uploads/*.blend
 
+# Dev artifacts
+_doc_extract.txt
+OYAYI_site_complet.docx
+
 .vercel
