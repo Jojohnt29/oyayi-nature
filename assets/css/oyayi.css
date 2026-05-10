@@ -8,18 +8,23 @@
      gris    #555555  noir #1A1A1A  blanc #FFFFFF
   ============================================================ */
   :root[data-da="green"]{
-    --bg-deep:#1B5E20;       /* OFFICIAL primary brand green = page background */
-    --bg-mid:#164C1A;        /* slightly darker green for cards (depth) */
-    --bg-soft:#2E7D32;       /* OFFICIAL medium green for accent surfaces */
-    --bg-soft-2:#0F3712;     /* deepest green for footer / contrast layers */
+    /* Page bg = dim green-black for eye comfort. The OFFICIAL brand
+       green #1B5E20 lives in --bg-soft and is reserved for ACCENT
+       surfaces (hero theme overlay, hover layers, newsletter, story
+       split, footer transition strip). Mature dark-mode practice:
+       brand color appears as highlight, not page-wide flood. */
+    --bg-deep:#0E1F12;       /* dim green-black — calm page background */
+    --bg-mid:#142A18;        /* card surfaces, one step lighter than bg-deep */
+    --bg-soft:#1B5E20;       /* OFFICIAL brand green — accent strips, hero, hover */
+    --bg-soft-2:#08130A;     /* deepest — footer, marquee, loader base */
     --cream:#FAFAF7;         /* OFFICIAL ivoire */
     --cream-2:#FFF8E1;       /* OFFICIAL or-cl light cream */
     --leaf-light:#A5D6A7;    /* light pale green, used in the flyer */
     --accent:#C8A84B;        /* OFFICIAL or — gold accent */
     --accent-2:#9B8338;      /* deeper gold */
     --ink:#1A1A1A;           /* OFFICIAL noir */
-    --line:rgba(250,250,247,.20);
-    --hairline:rgba(250,250,247,.10);
+    --line:rgba(250,250,247,.16);
+    --hairline:rgba(250,250,247,.08);
   }
   /* Brun · Terre — alternative warm theme tuned to brand: gold accent on warm base */
   :root[data-da="brown"]{
@@ -1117,3 +1122,54 @@
   body{text-rendering:optimizeLegibility;font-feature-settings:"kern" 1, "liga" 1, "ss01" 1}
 
   ::selection{background:var(--accent);color:var(--ink)}
+
+
+  /* ============================================================
+     BRAND GREEN ACCENT STRIPS
+     Use OFFICIAL #1B5E20 (--bg-soft) as highlight on KEY surfaces
+     so the brand color is felt strategically, not visually exhausting.
+     ============================================================ */
+
+  /* Hero: subtle brand-green vignette overlay (in addition to per-product theme) */
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(ellipse 90% 60% at 50% 30%, color-mix(in oklab, var(--bg-soft) 28%, transparent), transparent 70%);
+  }
+
+  /* Newsletter: brand green base with gold halo (was bg-mid, now bg-soft) */
+  .newsletter{
+    background:radial-gradient(ellipse at 30% 50%, color-mix(in oklab,var(--accent) 22%,transparent), transparent 60%),
+               linear-gradient(135deg, var(--bg-soft), color-mix(in oklab, var(--bg-soft) 50%, var(--bg-deep))) !important;
+    border-color:color-mix(in oklab, var(--accent) 30%, var(--line));
+  }
+
+  /* Story split: subtle brand-green wash on the right side */
+  .split{
+    background:linear-gradient(135deg, var(--bg-mid) 0%, color-mix(in oklab, var(--bg-soft) 45%, var(--bg-mid)) 100%) !important;
+  }
+  .split::before{
+    background:radial-gradient(circle at 75% 50%, color-mix(in oklab, var(--bg-soft) 65%, transparent) 0%, color-mix(in oklab, var(--accent) 20%, transparent) 30%, transparent 65%) !important;
+  }
+
+  /* Footer top-strip — thin brand green accent line */
+  footer{border-top:2px solid color-mix(in oklab, var(--bg-soft) 70%, var(--accent)) !important;}
+
+  /* Accent section: when an entire section wants brand emphasis, opt-in via .accent-section */
+  .accent-section{background:linear-gradient(180deg, var(--bg-deep) 0%, color-mix(in oklab, var(--bg-soft) 35%, var(--bg-deep)) 50%, var(--bg-deep) 100%);position:relative}
+
+  /* "Domaines" feature card with accent variant — preserve the gold-tinted highlight tile */
+  .domain[style*="accent"]{
+    background:linear-gradient(135deg, color-mix(in oklab, var(--bg-soft) 70%, var(--bg-mid)), color-mix(in oklab, var(--bg-soft) 30%, var(--bg-deep))) !important;
+  }
+
+  /* Page hero on inner pages: green vignette */
+  .page-hero .theme-bg{
+    background:radial-gradient(ellipse 80% 70% at 50% 30%,color-mix(in oklab,var(--bg-soft) 55%,transparent),transparent 65%),
+               linear-gradient(180deg,var(--bg-deep) 0%,color-mix(in oklab,var(--bg-deep) 60%,var(--bg-soft)) 50%,var(--bg-deep) 100%) !important;
+  }
+
+  /* Section underlines / dividers: thin brand green tint instead of plain line */
+  .sec-head{border-bottom:1px solid color-mix(in oklab, var(--bg-soft) 35%, var(--line))}
+
+  /* Active chip already uses gold; add a faint green tile on hover for non-active chips */
+  .chip:hover{background:color-mix(in oklab, var(--bg-soft) 25%, transparent)}
