@@ -231,7 +231,7 @@ APROPOS_BODY = """
   </div>
 </section>
 
-<section class="section" id="distinctions">
+<section class="section surface-cream" id="distinctions">
   <div class="sec-head"><div>
     <div class="sec-tag">// Galerie · Nos distinctions</div>
     <h2 class="sec-title">Des moments de <em>reconnaissance</em>.</h2>
@@ -302,7 +302,7 @@ APROPOS_BODY = """
   <p style="margin-top:30px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--cream-2);opacity:.6;text-transform:uppercase">// 8 distinctions reçues — Cotonou · Bénin</p>
 </section>
 
-<section class="section" id="avis">
+<section class="section surface-cream" id="avis">
   <div class="sec-head"><div>
     <div class="sec-tag">// 16 témoignages clients</div>
     <h2 class="sec-title">Ils ont changé leurs habitudes<br/>avec <em>OYAYI</em>.</h2>
@@ -447,7 +447,7 @@ COFFRETS_BODY = """
   </div>
 </section>
 
-<section class="section" id="coffrets">
+<section class="section surface-cream" id="coffrets">
   <div class="sec-head"><div>
     <div class="sec-tag">// Nos coffrets · 2 références</div>
     <h2 class="sec-title">Nos <em>coffrets</em>.</h2>
@@ -476,7 +476,7 @@ COFFRETS_BODY = """
   </div>
 </section>
 
-<section class="section" id="packs">
+<section class="section surface-cream" id="packs">
   <div class="sec-head"><div>
     <div class="sec-tag">// Nos packs · 5 routines ciblées</div>
     <h2 class="sec-title">Nos <em>packs</em> bien-être.</h2>
@@ -659,7 +659,7 @@ PRODUITS_BODY = """
   </div>
 </section>
 
-<div class="section" style="padding-top:0;padding-bottom:0">
+<div class="section surface-cream" style="padding-top:0;padding-bottom:0">
 """ + cat_section('01', '05', 'aromatherapie',
     'Aromathérapie<em>.</em>',
     "Soins par les huiles essentielles. Inhalation, diffusion, application cutanée.",
@@ -909,7 +909,7 @@ PANIER_BODY = """
   </div>
 </section>
 
-<section class="section" id="cartSection" style="padding-top:30px">
+<section class="section surface-cream" id="cartSection" style="padding-top:30px">
   <div id="cartContent"></div>
 </section>
 
@@ -929,7 +929,7 @@ PAIEMENT_BODY = """
   </div>
 </section>
 
-<section class="section" style="padding-top:30px" id="checkoutWrap">
+<section class="section surface-cream" style="padding-top:30px" id="checkoutWrap">
   <div id="checkoutContent"></div>
 </section>
 
