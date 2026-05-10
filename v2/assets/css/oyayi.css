@@ -1924,3 +1924,100 @@
     .hero::before{inset:50px 10px 16px;border-radius:20px}
     .page-hero::before, .article-hero::before{inset:60px 10px 24px;border-radius:20px}
   }
+
+
+  /* ============================================================
+     CLAUDE DESIGN DA PARITY PATCHES — exact match to OYAYI (4).zip
+     ============================================================ */
+
+  /* 1) MARQUEE = green band (continuation of hero) */
+  .marquee{
+    background:var(--hero-band) !important;
+    border:none !important;
+    padding:18px 0 !important;
+    backdrop-filter:none !important;
+  }
+  .marquee-track{color:#FFF8E1 !important;font-family:"Playfair Display",serif !important;font-style:italic !important;font-size:28px !important;opacity:.95 !important}
+  .marquee-track i{color:#C8A84B !important;font-family:"JetBrains Mono",monospace !important;font-style:normal !important;font-size:14px !important}
+
+  /* 2) FOOTER = green hero-band */
+  footer{
+    background:var(--hero-band) !important;
+    color:#FAFAF7 !important;
+    border-top:1px solid color-mix(in oklab, var(--accent) 28%, transparent) !important;
+    position:relative;z-index:1;
+  }
+  footer .foot-brand{color:#FAFAF7 !important}
+  footer .foot-brand em{color:var(--accent) !important}
+  footer .foot-tag{color:#E8F5E9 !important;opacity:.85}
+  footer .foot-grid h6{color:#E8F5E9 !important;opacity:.7}
+  footer .foot-grid a{color:#FAFAF7 !important;opacity:.85}
+  footer .foot-grid a:hover{color:var(--accent) !important;opacity:1}
+  footer .foot-bottom{border-top-color:rgba(250,250,247,.16) !important;color:#E8F5E9 !important;opacity:.7}
+
+  /* 3) STORY SPLIT = glass cream tinted card with subtle blur */
+  .split{
+    background:rgba(27,94,32,.035) !important;
+    border:1px solid var(--line) !important;
+    backdrop-filter:blur(8px) !important;
+    border-radius:24px !important;
+  }
+  .split::before{background:radial-gradient(circle at 75% 50%, rgba(200,168,75,.22), transparent 55%) !important}
+  .split-l .quote{color:var(--cream) !important;font-family:"Playfair Display",serif !important}
+  .split-l .quote em{color:var(--accent-2) !important}
+  .split-l .meta .v{color:var(--cream) !important}
+  .split-l .meta .l{color:var(--cream-2) !important}
+  .split-r .ring{border-color:rgba(27,94,32,.20) !important}
+  .split-r .pin{background:rgba(250,250,247,.92) !important;color:var(--cream) !important;border-color:rgba(27,94,32,.14) !important;backdrop-filter:blur(10px)}
+
+  /* 4) DIRECTION ARTISTIQUE PANEL — visible bottom-right */
+  .theme-fab{display:none !important}
+  body::after,body::before{ /* keep our luminous bg, already set */ }
+
+  .tweaks{
+    position:fixed !important;right:24px !important;bottom:24px !important;z-index:100 !important;
+    width:280px !important;background:#FFFFFF !important;
+    border:1px solid rgba(27,94,32,.16) !important;border-radius:18px !important;
+    padding:18px !important;
+    box-shadow:0 30px 70px rgba(27,94,32,.18) !important;
+    display:block !important;
+    color:var(--cream) !important;
+  }
+  .tweaks h4{font-family:"Playfair Display",serif !important;font-weight:400 !important;font-size:18px !important;margin-bottom:4px !important;color:var(--cream) !important}
+  .tweaks .sub{font-family:"JetBrains Mono",monospace !important;font-size:9px !important;letter-spacing:.22em !important;text-transform:uppercase !important;color:var(--cream-2) !important;opacity:.7 !important;margin-bottom:14px !important}
+  .tweaks .row{display:grid !important;grid-template-columns:1fr 1fr !important;gap:10px !important;margin-bottom:14px !important}
+  .da-pick{
+    aspect-ratio:1 !important;border-radius:14px !important;cursor:pointer;position:relative;overflow:hidden;
+    border:1px solid var(--line) !important;transition:all .25s;
+    display:flex;align-items:flex-end;padding:12px !important;
+  }
+  .da-pick.brown{background:linear-gradient(135deg,#FAFAF7,#FFF8E1 70%) !important;color:#1B5E20 !important;border-color:rgba(27,94,32,.18) !important}
+  .da-pick.brown::before{content:"";position:absolute;top:12px;left:12px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#C8A84B,#A78A2E)}
+  .da-pick.green{background:linear-gradient(135deg,#1B5E20,#0E3A14 70%) !important;color:#FAFAF7 !important}
+  .da-pick.green::before{content:"";position:absolute;top:12px;left:12px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#C8A84B,#A78A2E)}
+  .da-pick .nm{font-family:"JetBrains Mono",monospace !important;font-size:9px !important;letter-spacing:.18em !important;text-transform:uppercase !important;font-weight:600}
+  .da-pick.active{outline:2px solid var(--accent) !important;outline-offset:3px !important}
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--cream-2);margin-bottom:10px}
+  .switch{width:36px;height:20px;border-radius:999px;border:1px solid var(--line);position:relative;cursor:pointer;background:rgba(27,94,32,.06);transition:all .25s}
+  .switch::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--cream-2);transition:all .25s}
+  .switch.on{background:var(--accent);border-color:var(--accent)}
+  .switch.on::after{left:18px;background:#1B5E20}
+  .tweaks-close{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:var(--cream-2);background:none;border:0;cursor:pointer;font-size:18px;line-height:1}
+  .tweaks-close:hover{color:var(--cream)}
+
+  /* 5) HERO product card + button = GOLD per Claude Design brown theme */
+  .hero .product-card .add{background:#C8A84B !important;color:#1B5E20 !important}
+  .hero .product-card .add:hover{background:#FFF8E1 !important;color:#1B5E20 !important}
+
+  /* 6) Hero notes : gold pills */
+  .hero .note{background:rgba(200,168,75,.18) !important;color:#FFF8E1 !important;border-color:rgba(200,168,75,.40) !important}
+
+  /* 7) Preserve per-product --c-glow tints on pcard image area (subtle, like screenshot 4) */
+  .pcard{background:linear-gradient(180deg, #FFFFFF, color-mix(in oklab, var(--c-glow, var(--accent)) 6%, #FFFFFF)) !important}
+  .pcard .img{background:radial-gradient(ellipse at 50% 70%, color-mix(in oklab, var(--c-glow, var(--accent)) 22%, transparent), transparent 65%) !important}
+
+  /* 8) Mobile : keep marquee text smaller, panel hides */
+  @media (max-width:768px){
+    .marquee-track{font-size:20px !important}
+    .tweaks{display:none !important}
+  }

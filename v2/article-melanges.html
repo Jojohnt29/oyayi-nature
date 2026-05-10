@@ -194,5 +194,37 @@
 </button>
 
 <script src="assets/js/site.js"></script>
+
+<!-- ============== DIRECTION ARTISTIQUE (locked to ivoire) ============== -->
+<aside class="tweaks open" id="tweaks">
+  <button class="tweaks-close" id="tweaksClose" aria-label="Fermer">×</button>
+  <h4>Direction artistique</h4>
+  <div class="sub">// Choisissez la palette</div>
+  <div class="row">
+    <button class="da-pick brown active" data-da="brown"><span class="nm">Ivoire · Lumière</span></button>
+    <button class="da-pick green" data-da="green"><span class="nm">Vert · Forêt</span></button>
+  </div>
+  <div class="toggle-row"><span>Lecture auto du carrousel</span><div class="switch on" id="autoSw"></div></div>
+  <div class="toggle-row"><span>Bg dynamique par flacon</span><div class="switch on" id="bgSw"></div></div>
+</aside>
+<script>
+(function(){
+  // Wire the panel buttons visually (theme is locked to brown via CSS !important)
+  const close = document.getElementById('tweaksClose');
+  const panel = document.getElementById('tweaks');
+  if(close && panel){
+    close.addEventListener('click', () => panel.classList.remove('open'));
+  }
+  document.querySelectorAll('.da-pick').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      document.querySelectorAll('.da-pick').forEach(x=>x.classList.toggle('active', x===b));
+    });
+  });
+  document.querySelectorAll('.switch').forEach(s=>{
+    s.addEventListener('click', ()=>s.classList.toggle('on'));
+  });
+})();
+</script>
+
 </body>
 </html>
